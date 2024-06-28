@@ -1,5 +1,7 @@
 package com.marcos.pizzaria_sistema.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -7,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 
@@ -20,6 +23,9 @@ public class Categoria {
 	@NotBlank
 	@Column(name = "nome")
 	private String nome;
+
+	@OneToMany(mappedBy = "categoria")
+	private List<Produto> produto = new ArrayList<>();
 
 	public Categoria() {
 	}
@@ -44,6 +50,10 @@ public class Categoria {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public List<Produto> getProduto() {
+		return produto;
 	}
 
 	@Override

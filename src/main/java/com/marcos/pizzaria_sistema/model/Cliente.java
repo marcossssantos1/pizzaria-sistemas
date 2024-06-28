@@ -1,7 +1,5 @@
 package com.marcos.pizzaria_sistema.model;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -9,13 +7,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
-@Table(name = "tb_ingredientes")
-public class Ingredientes {
+@Table(name = "tb_cliente")
+public class Cliente {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,17 +22,31 @@ public class Ingredientes {
 	@NotBlank
 	@Column(name = "nome")
 	private String nome;
+	@NotBlank
+	@Column(name = "telefone")
+	private String telefone;
 
-	@OneToMany(mappedBy = "ingredientes")
-	private List<Produto> produto = new ArrayList<>();
+	@OneToOne
+	@JoinColumn(name = "endereco_id", nullable = false)
+	private Endereco endereco;
 
-	public Ingredientes() {
+	public Cliente() {
 	}
 
-	public Ingredientes(Long id, @NotBlank String nome) {
+	public Cliente(Long id, @NotBlank String nome, @NotBlank String telefone) {
 		super();
 		this.id = id;
 		this.nome = nome;
+		this.telefone = telefone;
+
+	}
+
+	public Cliente(Long id, @NotBlank String nome, @NotBlank String telefone, Endereco endereco) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.telefone = telefone;
+		this.endereco = endereco;
 	}
 
 	public Long getId() {
@@ -52,8 +65,20 @@ public class Ingredientes {
 		this.nome = nome;
 	}
 
-	public List<Produto> getProduto() {
-		return produto;
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
 	}
 
 	@Override
@@ -69,7 +94,7 @@ public class Ingredientes {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Ingredientes other = (Ingredientes) obj;
+		Cliente other = (Cliente) obj;
 		return Objects.equals(id, other.id);
 	}
 
