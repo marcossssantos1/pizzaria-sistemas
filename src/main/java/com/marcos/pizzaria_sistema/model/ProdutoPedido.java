@@ -8,7 +8,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -23,9 +24,12 @@ public class ProdutoPedido {
 	@Column(name = "observacao")
 	private String observacao;
 
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "produto_id", nullable = false)
 	private Produto produto;
+
+	@OneToMany(mappedBy = "produtos")
+	private Pedido pedido;
 
 	public ProdutoPedido() {
 	}
@@ -68,6 +72,14 @@ public class ProdutoPedido {
 
 	public void setProduto(Produto produto) {
 		this.produto = produto;
+	}
+
+	public Pedido getPedido() {
+		return pedido;
+	}
+
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
 	}
 
 	@Override

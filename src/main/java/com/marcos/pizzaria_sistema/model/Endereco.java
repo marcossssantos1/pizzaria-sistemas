@@ -2,6 +2,7 @@ package com.marcos.pizzaria_sistema.model;
 
 import java.util.Objects;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,6 +30,9 @@ public class Endereco {
 
 	@OneToOne(mappedBy = "endereco")
 	private Cliente clientes;
+	
+	@OneToOne(mappedBy = "endereco", cascade = CascadeType.ALL)
+	private Pedido pedido;
 
 	public Endereco() {
 	}
